@@ -1,27 +1,45 @@
 <?php
-    function readMember() {
-        $servername = "osdb.c6tnvaeewkyj.ap-southeast-1.rds.amazonaws.com";
-        $username = "root";
-        $password = "1234asdf";
-        $dbname = "os_db";
+    class ConnectionDetail {
+        public $servername;
+        public $username;
+        public $password;
+        public $databaseName;
+    }
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+    function createConnectionDetail() {
+        $connectionDetail = new ConnectionDetail();
+        $connectionDetail->servername = "osdb.c6tnvaeewkyj.ap-southeast-1.rds.amazonaws.com";
+        $connectionDetail->username = "root";
+        $connectionDetail->password = "1234asdf";
+        $connectionDetail->databaseName = "os_db";
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        } 
+        return $connectionDetail;
+    }
 
-        $sql = "SELECT * FROM Members";
-        $result = $conn->query($sql);
+    function createConnection() {
+        $connectionDetail = createConnectionDetail();
+        $connection = new mysqli(
+            $connectionDetail->servername,
+            $connectionDetail->username,
+            $connectionDetail->password,
+            $connectionDetail->databaseName
+        );
 
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo "name: " . $row["firstname"]. " " . $row["lastname"]. "(" . $row["nickname"]. ")";
-                echo "<img src='". $row["imageURL"] ."'></img><hr>";
-            }
-        } else {
-            echo "0 results";
+        return $connection;
+    }
+
+    function isConnectionError($connection) {
+        if($connection->connect_error) {
+            die("Connection failed: ". $connection.connect_error);
         }
-        $conn->close();
+    }
+
+    function readMembers() {
+        $connection = createConnection();
+        isConnectionError($connection);
+        $queryStatement = "SELECT * FROM Members";
+        $result = $connection->query($queryStatement);
+
+        return $result;
     }
 ?>
