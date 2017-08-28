@@ -8,10 +8,10 @@
 
     function createConnectionDetail() {
         $connectionDetail = new ConnectionDetail();
-        $connectionDetail->servername = "osdb.c6tnvaeewkyj.ap-southeast-1.rds.amazonaws.com";
+        $connectionDetail->servername = "aa1wkcd671b1vfi.c6tnvaeewkyj.ap-southeast-1.rds.amazonaws.com";
         $connectionDetail->username = "root";
         $connectionDetail->password = "1234asdf";
-        $connectionDetail->databaseName = "os_db";
+        $connectionDetail->databaseName = "ebdb";
 
         return $connectionDetail;
     }
