@@ -13,7 +13,7 @@
         Members
       </h1>
       <?php
-        require "member.controller.php";
+        require "query.php";
 
         $members = readMembers();
 
